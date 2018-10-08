@@ -88,3 +88,19 @@ overwriting any props with the same key.
 ```javascript
 static On = (props) => (props.on && props.children);
 ```
+Caution with lists:
+```javascript
+static On = (props) => (props.list.length && props.children);
+```
+If the list has 0 elements, react displays 0. To fix this issue, use Boolean(), like the following example:
+```javascript
+static On = (props) => (Boolean(props.list.length) && props.children);
+```
+
+### Lesson 3: Flexible Compound Components with context
+#### React Context API
+[ReactJS: Context](https://reactjs.org/docs/context.html)  
+[Medium: Reacts new context API](https://medium.com/dailyjs/reacts-%EF%B8%8F-new-context-api-70c9fe01596b)  
+[Medium: Learn the React Context API with a Practical Example You Can Bring to Your Apps](https://itnext.io/understanding-the-react-context-api-through-building-a-shared-snackbar-for-in-app-notifications-6c199446b80c)  
+[Medium: How to use the new React context API](https://hackernoon.com/how-to-use-the-new-react-context-api-fce011e7d87)  
+[Alligator.io: Understanding the React Context API](https://alligator.io/react/context-api/)  

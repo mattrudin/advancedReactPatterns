@@ -71,7 +71,20 @@ Examples:
 [mxstbr: A deep dive into children in React](https://mxstbr.blog/2017/02/react-children-deepdive/)  
 [learn.co: this.props.children](https://learn.co/lessons/react-this-props-children)  
 ```
-*React.Children.map* has two parameters: the first one is the children themselves, and the second one is a function that transforms the value of the child. In this case, we're adding an extra prop. We do that using *React.cloneElement*. As the first argument we pass in the child component itself, and as the second argument, we pass in any additional props. Those additional props get merged with the child's existing props, overwriting any props with the same key.
+*React.Children.map* has two parameters: the first one is the children
+themselves, and the second one is a function that transforms the value of
+the child. In this case, we're adding an extra prop. We do that using 
+*React.cloneElement*. As the first argument we pass in the child 
+component itself, and as the second argument, we pass in any additional 
+props. Those additional props get merged with the child's existing props,
+overwriting any props with the same key.
 ```
 [Hashrocket: Mapping Over One Or Many Children In React](https://til.hashrocket.com/posts/yb1ee3dhxp-mapping-over-one-or-many-children-in-react)  
 [Github: Dynamically Add Props To A Child Component](https://github.com/jbranchaud/til/blob/master/react/dynamically-add-props-to-a-child-component.md)  
+[ReactJS: React.Children.map](https://reactjs.org/docs/react-api.html#reactchildrenmap)  
+[ReactJS: cloneElement](https://reactjs.org/docs/react-api.html#cloneelement)  
+
+#### Ternary with &&
+```javascript
+static On = (props) => (props.on && props.children);
+```

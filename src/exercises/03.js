@@ -36,28 +36,24 @@ class Toggle extends React.Component {
   // 🐨 each of these compound components will need to be changed to use
   // ToggleContext.Consumer and rather than getting `on` and `toggle`
   // from props, it'll get it from the ToggleContext.Consumer value.
-  static On = ({on, children}) => (
+  static On = ({children}) => (
   <ToggleContext.Consumer>
-    {contextValue => (on ? children : null)}
-    </ToggleContext.Consumer>
+    {contextValue => (contextValue.on ? children : null)}
+  </ToggleContext.Consumer>
   )
-  static Off = ({on, children}) => (
+  static Off = ({children}) => (
   <ToggleContext.Consumer>
-    {contextValue => (on ? null : children)}
-    </ToggleContext.Consumer>
+    {contextValue => (contextValue.on ? null : children)}
+  </ToggleContext.Consumer>
   )
-  static Button = ({on, toggle, ...props}) => (
+  static Button = props => (
   <ToggleContext.Consumer>
-    {contextValue => <Switch on={on} onClick={toggle} {...props} />}
-    </ToggleContext.Consumer>
+    {contextValue => (
+      <Switch on={on} onClick={contextValue.toggle} {...props} />
+    )}
+  </ToggleContext.Consumer>
   )    
 
-  //-7:34 min
-
-  // Because we'll be passing state into context, we need to 🐨 add the
-  // toggle function to state.
-  // 💰 You'll need to move this below the `toggle` function. See
-  // if you can figure out why :)
   state = {on: false}
   toggle = () =>
     this.setState(
@@ -65,10 +61,16 @@ class Toggle extends React.Component {
       () => this.props.onToggle(this.state.on),
     )
   render() {
-    return <ToggleContext.Provider value={
-      on: this.state.on,
-      toggle: this.toggle
-    }>{this.props.children}</ToggleContext.Provider>
+    return (
+    <ToggleContext.Provider 
+      value=({
+        on: this.state.on,
+        toggle: this.toggle
+      })
+    >
+      {this.props.children}
+    </ToggleContext.Provider>
+    )
   }
 }
 

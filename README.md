@@ -185,3 +185,40 @@ class Toggle extends React.Component {
 ### Lesson 5: Prop collections
 As the name implies: A collection of props for a given render prop.
 If inside the render prop more components share the same props, those props can be collect to a collection of the same props.
+
+### Lesson 6: Prop getters
+Gives full control to the render part of the component. The user can give the component the props he wishes to use and the component will take care of the state.
+Example:
+```javascript
+//utility function
+const callAll = (...fns) => (...args) => fns.forEach(fn => fn && fn(...args))
+
+//component with the props collector getStateAndHelpers and the props getter getTogglerProps
+class Toggle extends React.Component {
+  state = {on: false}
+  toggle = () =>
+    this.setState(
+      ({on}) => ({on: !on}),
+      () => this.props.onToggle(this.state.on),
+    )
+
+  getTogglerProps = ({onClick, ...props}) => ({
+      onClick: callAll(this.toggle, onClick),
+      'aria-expanded': this.state.on,
+      ...props,
+    })
+
+
+  getStateAndHelpers() {
+    return {
+      on: this.state.on,
+      toggle: this.toggle,
+      togglerProps: this.getTogglerProps,
+      },
+    }
+  
+  render() {
+    return this.props.children(this.getStateAndHelpers())
+  }
+}
+```

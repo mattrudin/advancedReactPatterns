@@ -143,3 +143,42 @@ constructor(...args) {
 
 ```
 As seen above, less code has to be written with the same output in readability and function.
+
+### Lesson 4: Render props
+Seperates state from render. Eg.
+```javascript
+// state/logic
+class Toggle extends React.Component {
+  state = {on: false}
+  toggle = () =>
+    this.setState(
+      ({on}) => ({on: !on}),
+      () => {
+        this.props.onToggle(this.state.on)
+      },
+    )
+  
+  render() {
+    return this.props.children({on: this.state.on, toggle: this.toggle});
+  }
+}
+
+// render/UI
+    <Toggle onToggle={onToggle}>
+      {({on, toggle}) => (
+        <div>
+          {on ? 'The button is on' : 'The button is off'}
+          <Switch on={on} onClick={toggle} />
+          <hr />
+          <button aria-label="custom-button" onClick={toggle}>
+            {on ? 'on' : 'off'}
+          </button>
+        </div>
+      )}
+    </Toggle>
+```
+[ReactJS: Render props](https://reactjs.org/docs/render-props.html)  
+[Medium: Learn render props by example](https://engineering.dollarshaveclub.com/learn-render-props-by-example-da3e2524dd2e)  
+[Medium: Compose render Props](https://blog.kentcdodds.com/compose-render-props-46cf491e9d19)[Medium: Answers to common questions about render props](https://blog.kentcdodds.com/answers-to-common-questions-about-render-props-a9f84bb12d5d)  
+[Medium: When not to use render props](https://blog.kentcdodds.com/when-to-not-use-render-props-5397bbeff746)  
+  

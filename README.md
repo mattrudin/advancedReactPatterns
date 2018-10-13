@@ -104,3 +104,42 @@ static On = (props) => (Boolean(props.list.length) && props.children);
 [Medium: Learn the React Context API with a Practical Example You Can Bring to Your Apps](https://itnext.io/understanding-the-react-context-api-through-building-a-shared-snackbar-for-in-app-notifications-6c199446b80c)  
 [Medium: How to use the new React context API](https://hackernoon.com/how-to-use-the-new-react-context-api-fce011e7d87)  
 [Alligator.io: Understanding the React Context API](https://alligator.io/react/context-api/)  
+
+#### constructor
+In general, constructors won't be needed anymore. Methods can be declared with the arrow function, so they don't have to bind "this" in the constructor.
+ There is an alternative pattern instead of constructors, as shown below.
+```javascript
+//with constructor
+constructor(...args) {
+    super(...args);
+    this.toggle = () => {
+      this.setState(
+      ({on}) => ({on: !on}),
+      () => this.props.onToggle(this.state.on)
+      )
+    }
+    this.state = {on: false, toggle: this.toggle}
+  
+  }
+  render() {
+      return //something
+  }
+
+```
+
+```javascript
+//without constructor
+ toggle = () => {
+    this.setState(
+      ({on}) => ({on: !on}),
+      () => this.props.onToggle(this.state.on),
+      )
+  }
+  state = {on: false, toggle: this.toggle}
+
+  render() {
+      return //something
+  }
+
+```
+As seen above, less code has to be written with the same output in readability and function.

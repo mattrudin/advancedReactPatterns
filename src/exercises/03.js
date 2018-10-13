@@ -3,39 +3,12 @@
 import React from 'react'
 import {Switch} from '../switch'
 
-// Right now our component can only clone and pass props to immediate children.
-// So we need some way for our compound components to implicitly accept the on
-// state and toggle method regardless of where they're rendered within the
-// Toggle component's "posterity" :)
-//
-// The way we do this is through context. React.createContext is the API we
-// want. Here's a simple example of that API:
-//
-// const defaultValue = 'light'
-// const ThemeContext = React.createContext(defaultValue)
-//
-// ...
-// <ThemeContext.Provider value={this.state}>
-//   {this.props.children}
-// </ThemeContext.Provider>
-// ...
-//
-// ...
-// <ThemeContext.Consumer>
-//   {value => <div>The current theme is: {value}</div>}
-// </ThemeContext.Consumer>
-// ...
-
-// 🐨 create a ToggleContext with React.createContext here
 const ToggleContext = React.createContext({
   on: false,
   toggle: () => {}
 })
 
 class Toggle extends React.Component {
-  // 🐨 each of these compound components will need to be changed to use
-  // ToggleContext.Consumer and rather than getting `on` and `toggle`
-  // from props, it'll get it from the ToggleContext.Consumer value.
   static On = ({children}) => (
   <ToggleContext.Consumer>
     {contextValue => (contextValue.on ? children : null)}
@@ -54,22 +27,28 @@ class Toggle extends React.Component {
   </ToggleContext.Consumer>
   )    
 
-  state = {on: false}
-  toggle = () =>
+  toggle = () => {
     this.setState(
       ({on}) => ({on: !on}),
       () => this.props.onToggle(this.state.on),
-    )
-  render() {
+      )
+  }
+  state = {on: false, toggle: this.toggle}
+  
+/*   constructor(...args) {
+    super(...args);
+    this.toggle = () => {
+      this.setState(
+      ({on}) => ({on: !on}),
+      () => this.props.onToggle(this.state.on)
+      )
+    }
+    this.state = {on: false, toggle: this.toggle}
+  
+  } */
+    render() {
     return (
-    <ToggleContext.Provider 
-      value=({
-        on: this.state.on,
-        toggle: this.toggle
-      })
-    >
-      {this.props.children}
-    </ToggleContext.Provider>
+    <ToggleContext.Provider value={this.state}>{this.props.children}</ToggleContext.Provider>
     )
   }
 }

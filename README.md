@@ -181,4 +181,7 @@ class Toggle extends React.Component {
 [Medium: Learn render props by example](https://engineering.dollarshaveclub.com/learn-render-props-by-example-da3e2524dd2e)  
 [Medium: Compose render Props](https://blog.kentcdodds.com/compose-render-props-46cf491e9d19)[Medium: Answers to common questions about render props](https://blog.kentcdodds.com/answers-to-common-questions-about-render-props-a9f84bb12d5d)  
 [Medium: When not to use render props](https://blog.kentcdodds.com/when-to-not-use-render-props-5397bbeff746)  
-  
+
+### Lesson 5: Prop collections
+As the name implies: A collection of props for a given render prop.
+If inside the render prop more components share the same props, those props can be collect to a collection of the same props.

@@ -222,3 +222,14 @@ class Toggle extends React.Component {
   }
 }
 ```
+
+### Lesson 7: State Initializers
+Define an initial state and set the state to this initial state.
+```javascript
+class Toggle extends React.Component {
+  initialState = {on: this.props.initialOn};
+  state = this.initialState;
+  //other code
+}
+```
+

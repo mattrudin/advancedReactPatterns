@@ -233,3 +233,26 @@ class Toggle extends React.Component {
 }
 ```
 
+### Lesson 8: State reducer
+The state reducer allows people to control how the state is managed. State reducer hooks into every setState call to modify how the state is updated in the component.
+[Medium: The state reducer pattern](https://blog.kentcdodds.com/the-state-reducer-pattern-%EF%B8%8F-b40316cfac57)  
+[Medium: Discovering the State Reducer Pattern](https://medium.com/@ivanmontiel/discovering-the-state-reducer-pattern-3f324bb1a4c4)  
+
+
+```javascript
+class Toggle extends React.Component {
+  initialState = {on: this.props.initialOn}
+  state = this.initialState
+  internalSetState = (changes, callback) => { //define the internalSetState method
+    this.setState(currentState => {
+      const changesObject = typeof changes === 'function' ? changes(currentState) : changes;
+      const reducedChanges = this.props.stateReducer(currentState, changesObject);
+      return reducedChanges;
+    }, callback)
+  }
+
+  reset = () =>
+    this.internalSetState(this.initialState, () => //every setState has to be changed to this.internalSetState
+      this.props.onReset(this.state.on),
+    )
+  ```

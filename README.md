@@ -287,4 +287,36 @@ internalSetState(changes, callback) {
 #### ENUMS
 [Stijn de Witt: Enums in JavaScript](https://stijndewitt.com/2014/01/26/enums-in-javascript/)  
 [Medium: Enumeration Objects in JavaScript](https://medium.com/techtrument/enumeration-objects-in-javascript-ec06a83f39f2)  
-[David Strauss: Cleaner JavaScript code with Enums](https://www.stravid.com/en/cleaner-javascript-code-with-enums/)
+[David Strauss: Cleaner JavaScript code with Enums](https://www.stravid.com/en/cleaner-javascript-code-with-enums/)  
+
+### Lesson 10: Control props (synchronizing two components)
+Check if the component is controlled by the user or the state itself
+```javascript
+  isOnControlled() {
+    return this.props.on !== undefined;
+  }
+```
+Get the right source: either props (if user control) or state
+```javascript
+
+  getState() {
+    return {
+      on: this.isOnControlled() ? this.props.on : this.state.on
+    }
+  }
+```
+Use getState in the following methods to get the right source
+```javascript  
+  toggle = () => {
+    if (this.isOnControlled()) {
+      this.props.onToggle(!this.getState().on) //use props
+    } else {
+      this.setState(
+        ({on}) => ({on: !on}),
+        () => {
+          this.props.onToggle(this.getState().on) //use own state
+        },
+      )
+    }
+  }
+```

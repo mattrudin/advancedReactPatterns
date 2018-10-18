@@ -255,4 +255,36 @@ class Toggle extends React.Component {
     this.internalSetState(this.initialState, () => //every setState has to be changed to this.internalSetState
       this.props.onReset(this.state.on),
     )
-  ```
+```
+
+### Lesson 9: State reducers with types
+Either change the type of the input in the arguments...
+
+```javascript
+toggle = ({type = 'toggle'}) =>
+  this.internalSetState(
+    ({on}) => ({type, on: !on}),
+    () => this.props.onToggle(this.state.on),
+  )
+```
+...or in the internatSetState...
+
+```javascript
+reset = () =>
+  this.internalSetState({type: 'reset', ...this.initialState}, () =>
+    this.props.onReset(this.state.on),
+  )
+```
+
+...and finally, ignore the type in the internalSetState to prevent a rerender of the component
+
+```javascript
+internalSetState(changes, callback) {
+    this.setState(state => {
+      const {type: ignoredType, ...remainingChanges} = reducedChanges;
+```
+
+#### ENUMS
+[Stijn de Witt: Enums in JavaScript](https://stijndewitt.com/2014/01/26/enums-in-javascript/)  
+[Medium: Enumeration Objects in JavaScript](https://medium.com/techtrument/enumeration-objects-in-javascript-ec06a83f39f2)  
+[David Strauss: Cleaner JavaScript code with Enums](https://www.stravid.com/en/cleaner-javascript-code-with-enums/)

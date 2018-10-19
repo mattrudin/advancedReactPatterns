@@ -320,3 +320,12 @@ Use getState in the following methods to get the right source
     }
   }
 ```
+
+### Lesson 11: Provider pattern
+#### No-op
+[code.i-harness: What is the JavaScript convention for no operation?](https://code.i-harness.com/en/q/14a1f46)  
+[Medium: To no-op or Not To no-op](https://medium.com/front-end-hacking/slapdash-refactoring-d549e952706a)  
+[Stackoverflow: What is the JavaScript convention for no operation?](https://stackoverflow.com/questions/21634886/what-is-the-javascript-convention-for-no-operation)  
+
+#### Context API
+See Lesson 3 for further information.

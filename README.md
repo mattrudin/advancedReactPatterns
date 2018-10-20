@@ -329,3 +329,20 @@ Use getState in the following methods to get the right source
 
 #### Context API
 See Lesson 3 for further information.
+
+### Lesson 12: Higher Order Components
+#### React.createRef()
+[Medium: Introduction to Refs in React 16.3](https://medium.com/@sgroff04/introduction-to-refs-in-react-16-3-d94505b45a73)  
+[css-tricks: Working with refs in React](https://css-tricks.com/working-with-refs-in-react/)  
+[Medium: How to use React createRef](https://blog.logrocket.com/how-to-use-react-createref-ea014ad09dba)  
+
+#### React.forwardRef()
+[React JS: Forwarding refs](https://reactjs.org/docs/forwarding-refs.html)  
+[Fullstack React: Fullstack React's Guide to using Refs in React Components](https://www.fullstackreact.com/articles/using-refs-in-react/)  
+
+#### Component.displayName
+If a component does not have a name, it will be displayed as "unknown". To give it a name, use YOUR_COMPONENT.displayName = 'YOUR_DISPLAY_NAME'.
+[Today I learnt: Alter The Display Name Of A React Component](https://til.hashrocket.com/posts/xr5tbbybkd-alter-the-display-name-of-a-react-component)  
+
+#### hoistNonReactStatics
+[GitHub: hoist-non-react-statics](https://github.com/mridgway/hoist-non-react-statics)  

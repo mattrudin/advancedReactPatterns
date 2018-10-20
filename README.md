@@ -346,3 +346,17 @@ If a component does not have a name, it will be displayed as "unknown". To give 
 
 #### hoistNonReactStatics
 [GitHub: hoist-non-react-statics](https://github.com/mridgway/hoist-non-react-statics)  
+
+### Lesson 13: Rendux: Redux as a render prop
+Setup of the component render prop (see excercise 13 for the redux part):
+```javascript
+render() {
+    const {children} = this.props;
+    const ui = typeof children === 'function' ? children(this.state) : children;
+    return(
+      <RenduxContext.Provider value={this.state} >
+        {ui}
+      </RenduxContext.Provider>
+    )
+  }
+```

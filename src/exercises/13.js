@@ -1,7 +1,13 @@
 import React from 'react'
-// import hoistNonReactStatics from 'hoist-non-react-statics'
+import hoistNonReactStatics from 'hoist-non-react-statics'
 import * as redux from 'redux'
 import {Switch} from '../switch'
+
+const RenduxContext = React.createContext({
+  state: {},
+  reset: () => {},
+  dispatch: () => {}
+})
 
 class Rendux extends React.Component {
   // I'll give you some of this because it's kinda redux-specific stuff
@@ -9,6 +15,7 @@ class Rendux extends React.Component {
     initialState: {},
     reducer: state => state,
   }
+  static Consumer = RenduxContext.Consumer;
   initialReduxState = this.props.initialState
   rootReducer = (state, action) => {
     if (action.type === '__RENDUX_RESET__') {
@@ -22,6 +29,11 @@ class Rendux extends React.Component {
       type: '__RENDUX_RESET__',
     })
   }
+  state = {
+    reset: this.reset,
+    dispatch: this.store.dispatch,
+    state: this.initialReduxState
+  }
   componentDidMount() {
     this.unsubscribe = this.store.subscribe(() =>
       this.setState({
@@ -33,14 +45,23 @@ class Rendux extends React.Component {
     this.unsubscribe()
   }
   render() {
-    // this is your job!
-    return 'todo'
+    const {children} = this.props;
+    const ui = typeof children === 'function' ? children(this.state) : children;
+    return(
+      <RenduxContext.Provider value={this.state} >
+        {ui}
+      </RenduxContext.Provider>
+    )
   }
 }
 
-function withRendux() {
-  // this is your job too!
-  return () => null
+function withRendux(Component) {
+  const Wrapper = React.forwardRef((props, ref) => {
+    <Rendux.Consumer>{rendux => <Comment {...props} ref={ref} rendux={rendux} />}</Rendux.Consumer>
+  })
+  Wrapper.displayName = 'withRendux(${Component.displayName || Component.name}';
+  hoistNonReactStatics(Wrapper, Component);
+  return Wrapper;
 }
 
 /////////////////////////////////////////////////////////
